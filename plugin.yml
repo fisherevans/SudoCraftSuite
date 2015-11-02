@@ -1,0 +1,35 @@
+name: SudoCraftSuite
+main: com.fisherevans.scs.SudoCraftSuite
+version: 1.0
+
+commands:
+  sethome:
+    description: Set's the players home to their current location
+    usage: /sethome
+    permission: SudoCraftSuite.home
+    permission-message: You don't have <permission>
+  home:
+    description: Teleports a player their home location
+    usage: /home
+    permission: SudoCraftSuite.home
+    permission-message: You don't have <permission>
+  back:
+    description: Returns a player to the last place they teleported from
+    usage: /back
+    permission: SudoCraftSuite.back
+    permission-message: You don't have <permission>
+  tpr:
+    description: Requests the current player to teleport to another player
+    usage: /tpr [player]
+    permission: SudoCraftSuite.tp
+    permission-message: You don't have <permission>
+  tpa:
+    description: Accepts a tp request
+    usage: /tpa [player]
+    permission: SudoCraftSuite.tp
+    permission-message: You don't have <permission>
+  vote:
+    description: Accepts a tp request
+    usage: /vote [clear|rain|thunder|night|day]
+    permission: SudoCraftSuite.vote
+    permission-message: You don't have <permission>
