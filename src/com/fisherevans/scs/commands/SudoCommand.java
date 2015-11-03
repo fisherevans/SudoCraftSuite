@@ -29,7 +29,7 @@ public abstract class SudoCommand implements CommandExecutor {
     if(location == null)
       return false;
     getPlugin().setPlayerBack(player.getName(), BasicLocation.fromPlayer(player));
-    player.teleport(location.toBukkitLocation());
+    player.teleport(location.toBukkitLocation(player.getLocation()));
     return true;
   }
 

@@ -57,8 +57,19 @@ public class BasicLocation {
     return new Location(Bukkit.getWorld(getWorld()), getX(), getY(), getZ());
   }
 
+  public Location toBukkitLocation(Location old) {
+    Location location = toBukkitLocation();
+    location.setPitch(old.getPitch());
+    location.setYaw(old.getYaw());
+    location.setDirection(old.getDirection());
+    return location;
+  }
+
   public static BasicLocation fromPlayer(Player player) {
-    Location location = player.getLocation();
+    return fromBukkitLocation(player.getLocation());
+  }
+
+  public static BasicLocation fromBukkitLocation(Location location) {
     return new BasicLocation(
         location.getX(),
         location.getY(),

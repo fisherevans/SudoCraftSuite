@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +28,11 @@ public class ChatListener implements Listener {
   public void onPlayerChat(AsyncPlayerChatEvent event) {
     event.setCancelled(true);
     String message = _plugin.getChatFormat();
+    try {
+      message = message.replace("#prefix", PermissionsEx.getUser(event.getPlayer()).getGroups()[0].getPrefix());
+    } catch(Exception e) {
+      _plugin.getLogger().warning("Failed to get group prefix for " + event.getPlayer().getName() + " - " + e.getLocalizedMessage());
+    }
     message = message.replace("#name", event.getPlayer().getDisplayName());
     message = message.replace("#message", event.getMessage());
     for(String colorHash:_colorReplacers.keySet())

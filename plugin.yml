@@ -5,31 +5,76 @@ version: 1.0
 commands:
   sethome:
     description: Set's the players home to their current location
-    usage: /sethome
-    permission: SudoCraftSuite.home
+    usage: /sethome [home name]
+    permission: SudoCraftSuite.builder
     permission-message: You don't have <permission>
   home:
     description: Teleports a player their home location
-    usage: /home
-    permission: SudoCraftSuite.home
+    usage: /home [home name]
+    permission: SudoCraftSuite.builder
+    permission-message: You don't have <permission>
+  delhome:
+    description: Deletes a home
+    usage: /delhome [home name]
+    permission: SudoCraftSuite.builder
+    permission-message: You don't have <permission>
+  homes:
+    description: Lists a players saved homes
+    usage: /homes
+    permission: SudoCraftSuite.builder
     permission-message: You don't have <permission>
   back:
     description: Returns a player to the last place they teleported from
     usage: /back
-    permission: SudoCraftSuite.back
+    permission: SudoCraftSuite.all
     permission-message: You don't have <permission>
   tpr:
     description: Requests the current player to teleport to another player
     usage: /tpr [player]
-    permission: SudoCraftSuite.tp
+    permission: SudoCraftSuite.all
     permission-message: You don't have <permission>
   tpa:
     description: Accepts a tp request
     usage: /tpa [player]
-    permission: SudoCraftSuite.tp
+    permission: SudoCraftSuite.all
     permission-message: You don't have <permission>
   vote:
     description: Accepts a tp request
-    usage: /vote [clear|rain|thunder|night|day]
-    permission: SudoCraftSuite.vote
+    usage: /vote [sun|rain|stormy|night|day]
+    permission: SudoCraftSuite.all
+    permission-message: You don't have <permission>
+  builder:
+    description: Sets a Guests's group to Builder
+    usage: /builder [player]
+    permission: SudoCraftSuite.builder
+    permission-message: You don't have <permission>
+  spawn:
+    description: Telports a player to spawn
+    usage: /spawn [world]
+    permission: SudoCraftSuite.all
+    permission-message: You don't have <permission>
+  setspawn:
+    description: Sets the current players world spawn to the players location
+    usage: /setspawn
+    permission: SudoCraftSuite.admin
+    permission-message: You don't have <permission>
+  delwarp:
+    description: Deletes a warp location
+    usage: /delwarp [warp name]
+    permission: SudoCraftSuite.admin
+    permission-message: You don't have <permission>
+  warp:
+    description: Teleports the player to a warp location
+    usage: /warp [warp name]
+    permission: SudoCraftSuite.builder
+    permission-message: You don't have <permission>
+  warps:
+    description: Lists all warp locations
+    usage: /warps
+    permission: SudoCraftSuite.builder
+    permission-message: You don't have <permission>
+  setwarp:
+    description: Sets a warp location
+    usage: /setwarp [warp name]
+    permission: SudoCraftSuite.admin
     permission-message: You don't have <permission>

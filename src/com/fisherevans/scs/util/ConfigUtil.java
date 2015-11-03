@@ -13,6 +13,8 @@ import java.util.Map;
 public class ConfigUtil {
 
   public static void loadMultiLocationMap(ConfigurationSection superSection, Map<String, Map<String, BasicLocation>> locationMap) {
+    if(superSection == null)
+      return;
     for(String subKey:superSection.getKeys(false)) {
       ConfigurationSection subSection = superSection.getConfigurationSection(subKey);
       Map<String, BasicLocation> subLocationMap = new HashMap<>();
@@ -22,6 +24,8 @@ public class ConfigUtil {
   }
 
   public static void loadLocationMap(ConfigurationSection section, Map<String, BasicLocation> locationMap) {
+    if(section == null)
+      return;
     for(String subKey:section.getKeys(false)) {
       ConfigurationSection subSection = section.getConfigurationSection(subKey);
       Double x = subSection.getDouble("x");

@@ -9,7 +9,7 @@ public class Constants {
 
   public static final String CONFIG_KEY_HOMES = "homes";
   public static final String CONFIG_KEY_HOMES_DEFAULT_NAME = "default-home-name";
-  public static final String DEFAULT_HOMES_NAME = "Default";
+  public static final String DEFAULT_HOMES_NAME = "default";
 
   public static final String CONFIG_KEY_BACKS = "backs";
 
@@ -23,4 +23,9 @@ public class Constants {
   public static final String CONFIG_VOTE_TIMEOUT = "vote-timeout";
   public static final Double DEFAULT_VOTE_REQUIRED = .8;
   public static final Integer DEFAULT_VOTE_TIMEOUT = 45;
+
+  public static final String CONFIG_KEY_WARPS = "warps";
+
+  public static final Integer DEFAULT_DIAMOND_DELAY = 10;
+  public static final String CONFIG_DIAMOND_DELAY = "diamond-delay";
 }
