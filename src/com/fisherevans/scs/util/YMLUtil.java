@@ -68,6 +68,8 @@ public class YMLUtil {
   }
 
   public static void setLocation(ConfigurationSection section, String key, Location location) {
+    if(location == null)
+      return;
     ConfigurationSection locationSection = section.createSection(key);
     locationSection.set(YML_LOCATION_X, location.getX());
     locationSection.set(YML_LOCATION_Y, location.getY());

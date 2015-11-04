@@ -44,7 +44,7 @@ public class SeenCommand extends SudoCommand {
     PlayerCache playerCache = null, thisPlayerCache;
     for(String uuid:getPlugin().getCache().getPlayers().keySet()) {
       thisPlayerCache = getPlugin().getCache().getPlayers().get(uuid);
-      if(thisPlayerCache.getLastUsername().equalsIgnoreCase(playerName)) {
+      if(playerName.equalsIgnoreCase(thisPlayerCache.getLastUsername())) {
         playerCache = thisPlayerCache;
         break;
       }
