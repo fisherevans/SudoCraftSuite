@@ -15,12 +15,14 @@ import java.util.Map;
 public class PlayerCache implements CacheObject {
   private static final String YML_LAST_USERNAME = "last-username";
   private static final String YML_LAST_LOGIN = "last-login";
+  private static final String YML_LAST_LOGIN_LOCATION = "last-login-location";
   private static final String YML_LAST_TELEPORT_LOCATION = "last-successfulTeleport-location";
   private static final String YML_HOMES = "homes";
 
   private String _uuid;
   private String _lastUsername;
   private Date _lastLogin;
+  private Location _lastLoginLocation;
   private Location _lastTeleportLocation;
   private Map<String, Location> _homes;
 
@@ -57,6 +59,14 @@ public class PlayerCache implements CacheObject {
     _lastLogin = lastLogin;
   }
 
+  public Location getLastLoginLocation() {
+    return _lastLoginLocation;
+  }
+
+  public void setLastLoginLocation(Location lastLoginLocation) {
+    _lastLoginLocation = lastLoginLocation;
+  }
+
   public Location getLastTeleportLocation() {
     return _lastTeleportLocation;
   }
@@ -69,6 +79,7 @@ public class PlayerCache implements CacheObject {
   public void load(ConfigurationSection section) {
     _lastUsername = section.getString(YML_LAST_USERNAME);
     _lastLogin = YMLUtil.getDate(section, YML_LAST_LOGIN);
+    _lastLoginLocation = YMLUtil.getLocation(section, YML_LAST_LOGIN_LOCATION);
     _lastTeleportLocation = YMLUtil.getLocation(section, YML_LAST_TELEPORT_LOCATION);
     YMLUtil.getLocationMap(section, YML_HOMES, _homes);
   }
@@ -77,6 +88,7 @@ public class PlayerCache implements CacheObject {
   public void save(ConfigurationSection section) {
     section.set(YML_LAST_USERNAME, _lastUsername);
     YMLUtil.setDate(section, YML_LAST_LOGIN, _lastLogin);
+    YMLUtil.setLocation(section, YML_LAST_LOGIN_LOCATION, _lastLoginLocation);
     YMLUtil.setLocation(section, YML_LAST_TELEPORT_LOCATION, _lastTeleportLocation);
     YMLUtil.setLocationMap(section, YML_HOMES, _homes);
   }

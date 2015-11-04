@@ -78,3 +78,8 @@ commands:
     usage: /setwarp [warp name]
     permission: SudoCraftSuite.admin
     permission-message: You don't have <permission>
+  seen:
+    description: Tells you the last time someone was online
+    usage: /seen [player name]
+    permission: SudoCraftSuite.builder
+    permission-message: You don't have <permission>

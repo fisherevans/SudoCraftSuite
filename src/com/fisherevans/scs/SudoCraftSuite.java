@@ -8,6 +8,7 @@ import com.fisherevans.scs.commands.home.HomesCommand;
 import com.fisherevans.scs.commands.home.SetHomeCommand;
 import com.fisherevans.scs.commands.misc.BackCommand;
 import com.fisherevans.scs.commands.misc.BuilderCommand;
+import com.fisherevans.scs.commands.misc.SeenCommand;
 import com.fisherevans.scs.commands.misc.VoteCommand;
 import com.fisherevans.scs.commands.spawn.SetSpawnCommand;
 import com.fisherevans.scs.commands.spawn.SpawnCommand;
@@ -86,6 +87,7 @@ public class SudoCraftSuite extends JavaPlugin {
     getCommand("setwarp").setExecutor(new SetWarpCommand(this));
     getCommand("warps").setExecutor(new WarpsCommand(this));
     getCommand("warp").setExecutor(new WarpCommand(this));
+    getCommand("seen").setExecutor(new SeenCommand(this));
   }
 
   @Override
@@ -104,7 +106,7 @@ public class SudoCraftSuite extends JavaPlugin {
     return _cache;
   }
 
-  public PlayerCache getPlayer(Player player) {
+  public PlayerCache getPlayerCache(Player player) {
     String uuid = player.getUniqueId().toString();
     if(!_cache.getPlayers().containsKey(uuid)) {
       String name = player.getName();

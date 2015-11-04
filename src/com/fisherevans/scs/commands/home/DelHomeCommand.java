@@ -22,7 +22,7 @@ public class DelHomeCommand extends SudoCommand {
     if(player == null)
       return false;
     String homeName = CommandUtil.getHomeArgument(getPlugin(), args);
-    if(getPlugin().getPlayer(player).getHomes().remove(homeName) == null)
+    if(getPlugin().getPlayerCache(player).getHomes().remove(homeName) == null)
       player.sendMessage(ChatColor.DARK_GRAY + "There is no such home, " + ChatColor.BLUE + homeName + ChatColor.DARK_GRAY + ", to be deleted.");
     else
       player.sendMessage(ChatColor.DARK_GRAY + "The following home has been deleted: " + ChatColor.BLUE + homeName);

@@ -23,7 +23,7 @@ public class HomesCommand extends SudoCommand {
     Player player = requirePlayer(commandSender);
     if(player == null)
       return false;
-    Map<String, Location> homes = getPlugin().getPlayer(player).getHomes();
+    Map<String, Location> homes = getPlugin().getPlayerCache(player).getHomes();
     if(homes == null || homes.size() == 0) {
       player.sendMessage(ChatColor.DARK_GRAY + "Your don't have any saved homes");
     } else {

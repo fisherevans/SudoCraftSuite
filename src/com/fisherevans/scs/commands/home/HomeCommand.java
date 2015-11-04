@@ -24,7 +24,7 @@ public class HomeCommand extends SudoCommand {
     if(player == null)
       return false;
     String homeName = CommandUtil.getHomeArgument(getPlugin(), args);
-    Location home = getPlugin().getPlayer(player).getHomes().get(homeName);
+    Location home = getPlugin().getPlayerCache(player).getHomes().get(homeName);
     if(BukkitUtil.successfulTeleport(getPlugin(), player, home) == false)
       player.sendMessage(ChatColor.DARK_GRAY + "There is no home set for " + ChatColor.BLUE + home);
     return true;

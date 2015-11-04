@@ -22,7 +22,7 @@ public class SetHomeCommand extends SudoCommand {
     if(player == null)
       return false;
     String homeName = CommandUtil.getHomeArgument(getPlugin(), args);
-    getPlugin().getPlayer(player).getHomes().put(homeName, player.getLocation().add(0, 1, 0));
+    getPlugin().getPlayerCache(player).getHomes().put(homeName, player.getLocation().add(0, 1, 0));
     player.sendMessage(ChatColor.BLUE + homeName + ChatColor.DARK_GRAY + " home set!");
     return true;
   }

@@ -21,7 +21,7 @@ public class BackCommand extends SudoCommand {
     Player player = requirePlayer(commandSender);
     if(player == null)
       return false;
-    if(BukkitUtil.successfulTeleport(getPlugin(), player, getPlugin().getPlayer(player).getLastTeleportLocation()) == false)
+    if(BukkitUtil.successfulTeleport(getPlugin(), player, getPlugin().getPlayerCache(player).getLastTeleportLocation()) == false)
       player.sendMessage(ChatColor.DARK_GRAY + "You've never teleported before.");
     return true;
   }
