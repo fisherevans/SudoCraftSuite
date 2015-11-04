@@ -1,10 +1,9 @@
-package com.fisherevans.scs.commands;
+package com.fisherevans.scs.commands.misc;
 
-import com.fisherevans.scs.Constants;
 import com.fisherevans.scs.SudoCraftSuite;
-import org.bukkit.Bukkit;
+import com.fisherevans.scs.commands.SudoCommand;
+import com.fisherevans.scs.util.BukkitUtil;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -19,13 +18,11 @@ public class BackCommand extends SudoCommand {
 
   @Override
   public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-    Player player = getPlayer(commandSender);
+    Player player = requirePlayer(commandSender);
     if(player == null)
       return false;
-    if(!teleport(getPlugin().getPlayerBack(player.getName()), player)) {
+    if(BukkitUtil.successfulTeleport(getPlugin(), player, getPlugin().getPlayer(player).getLastTeleportLocation()) == false)
       player.sendMessage(ChatColor.DARK_GRAY + "You've never teleported before.");
-      return true;
-    }
     return true;
   }
 }

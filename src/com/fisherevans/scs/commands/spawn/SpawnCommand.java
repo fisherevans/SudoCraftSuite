@@ -1,7 +1,9 @@
-package com.fisherevans.scs.commands;
+package com.fisherevans.scs.commands.spawn;
 
 import com.fisherevans.scs.SudoCraftSuite;
-import com.fisherevans.scs.util.BasicLocation;
+import com.fisherevans.scs.commands.SudoCommand;
+import com.fisherevans.scs.util.BukkitUtil;
+import com.fisherevans.scs.util.CommandUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -19,19 +21,13 @@ public class SpawnCommand extends SudoCommand {
 
   @Override
   public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-    Player player = getPlayer(commandSender);
-    if(player == null)
-      return false;
-    String name;
-    if(args.length == 0)
-      name = "world";
-    else
-      name = args[0];
-    World world = Bukkit.getWorld(name);
+    Player player = requirePlayer(commandSender);
+    String worldName = CommandUtil.getFirstArgument(args, "world");
+    World world = Bukkit.getWorld(worldName);
     if(world == null)
-      player.sendMessage(ChatColor.DARK_GRAY + "There is no world named " + ChatColor.BLUE + name);
+      player.sendMessage(ChatColor.DARK_GRAY + "There is no world named " + ChatColor.BLUE + worldName);
     else
-      teleport(BasicLocation.fromBukkitLocation(world.getSpawnLocation()), player);
+      BukkitUtil.successfulTeleport(getPlugin(), player, world.getSpawnLocation());
     return true;
   }
 }

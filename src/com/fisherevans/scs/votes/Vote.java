@@ -1,9 +1,8 @@
-package com.fisherevans.scs;
+package com.fisherevans.scs.votes;
 
-import com.mysql.jdbc.Buffer;
+import com.fisherevans.scs.SudoCraftSuite;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.World;
 
 import java.util.*;
@@ -13,11 +12,11 @@ import java.util.*;
  */
 public class Vote {
   private SudoCraftSuite _plugin;
-  private Type _type;
+  private VoteType _type;
   private Set<String> _votes;
   private Long _lastVote;
 
-  public Vote(SudoCraftSuite plugin, Type type) {
+  public Vote(SudoCraftSuite plugin, VoteType type) {
     _plugin = plugin;
     _type = type;
     _votes = new HashSet<>();
@@ -30,15 +29,14 @@ public class Vote {
       return false;
     }
     _lastVote = System.currentTimeMillis();
-    _plugin.getServer().broadcastMessage(ChatColor.BLUE + name + ChatColor.DARK_GRAY + " has voted to change the " + _type.aspect + " to " + ChatColor.BLUE + _type.value);
     _votes.add(name);
     cleanVotes();
-    int neededStill = (int)Math.ceil(((double)Bukkit.getOnlinePlayers().size()*_plugin.getVoteRequired())) - _votes.size();
+    int neededStill = (int)Math.ceil(((double)Bukkit.getOnlinePlayers().size()*_plugin.getCache().getConfig().getVote().getRequiredPercentage())) - _votes.size();
     if(neededStill > 0) {
-      _plugin.getServer().broadcastMessage(ChatColor.BLUE.toString() + neededStill + ChatColor.DARK_GRAY + " votes are still needed");
+      _plugin.getServer().broadcastMessage(ChatColor.BLUE + name + ChatColor.DARK_GRAY + " votes for " + ChatColor.BLUE + _type.value + ChatColor.DARK_GRAY + ". Still need " + ChatColor.BLUE.toString() + neededStill + ChatColor.DARK_GRAY + " vote" + (neededStill == 1 ? "" : "s") + ".");
       return false;
     }
-    _plugin.getServer().broadcastMessage(ChatColor.DARK_GRAY + "The vote has passed! Changing the " + _type.aspect + " to " + ChatColor.BLUE + _type.value);
+    _plugin.getServer().broadcastMessage(ChatColor.BLUE + name + ChatColor.DARK_GRAY + " passed the vote! Changing the " + _type.aspect + " to " + ChatColor.BLUE + _type.value);
     for(World world:Bukkit.getWorlds()) {
       switch(_type) {
         case WeatherSun:
@@ -81,20 +79,5 @@ public class Vote {
 
   public Long getLastVote() {
     return _lastVote;
-  }
-
-  public enum Type {
-    WeatherSun("weather", "Sunny"),
-    WeatherRain("weather", "Rainy"),
-    WeatherStorm("weather", "Stormy"),
-    TimeDay("time", "Day"),
-    TimeNight("time", "Night");
-
-    public final String aspect, value;
-
-    Type(String aspect, String value) {
-      this.aspect = aspect;
-      this.value = value;
-    }
   }
 }

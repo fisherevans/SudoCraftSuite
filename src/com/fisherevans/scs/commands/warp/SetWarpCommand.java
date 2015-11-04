@@ -1,7 +1,7 @@
-package com.fisherevans.scs.commands;
+package com.fisherevans.scs.commands.warp;
 
 import com.fisherevans.scs.SudoCraftSuite;
-import com.fisherevans.scs.util.BasicLocation;
+import com.fisherevans.scs.commands.SudoCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -17,15 +17,15 @@ public class SetWarpCommand extends SudoCommand {
 
   @Override
   public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-    Player player = getPlayer(commandSender);
+    Player player = requirePlayer(commandSender);
     if(player == null)
       return false;
-    String name = args.length > 0 ? args[0] : "";
-    if(name.length() == 0) {
+    String warpName = args.length > 0 ? args[0] : "";
+    if(warpName.length() == 0) {
       player.sendMessage(ChatColor.DARK_GRAY + "Specify a warp name, like so: " + ChatColor.BLUE + "/setwarp RonPaul");
     } else {
-      getPlugin().setWarp(name, BasicLocation.fromPlayer(player));
-      player.sendMessage(ChatColor.BLUE + name + ChatColor.DARK_GRAY + " warp set!");
+      getPlugin().getCache().getWarps().put(warpName, player.getLocation().add(0, 1, 0));
+      player.sendMessage(ChatColor.BLUE + warpName + ChatColor.DARK_GRAY + " warp set!");
     }
     return true;
   }

@@ -1,6 +1,7 @@
-package com.fisherevans.scs.commands;
+package com.fisherevans.scs.commands.spawn;
 
 import com.fisherevans.scs.SudoCraftSuite;
+import com.fisherevans.scs.commands.SudoCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -17,12 +18,12 @@ public class SetSpawnCommand extends SudoCommand {
 
   @Override
   public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-    Player player = getPlayer(commandSender);
+    Player player = requirePlayer(commandSender);
     if(player == null)
       return false;
-    Location location = player.getLocation();
-    player.getWorld().setSpawnLocation(location.getBlockX(), location.getBlockY() + 1 , location.getBlockZ());
-    player.sendMessage(ChatColor.DARK_GRAY + "Spawn has been set to " + location.getBlockX() + ", " + (location.getBlockY() + 1) + ", " + location.getBlockZ());
+    Location location = player.getLocation().add(0, 1, 0);
+    player.getWorld().setSpawnLocation(location.getBlockX(), location.getBlockY(), location.getBlockZ());
+    player.sendMessage(ChatColor.DARK_GRAY + "Spawn has been set to " + location.getBlockX() + ", " + location.getBlockY() + ", " + location.getBlockZ());
     return true;
   }
 }

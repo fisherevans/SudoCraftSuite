@@ -1,8 +1,9 @@
-package com.fisherevans.scs.commands;
+package com.fisherevans.scs.commands.home;
 
 import com.fisherevans.scs.SudoCraftSuite;
-import com.fisherevans.scs.util.BasicLocation;
+import com.fisherevans.scs.commands.SudoCommand;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -19,18 +20,18 @@ public class HomesCommand extends SudoCommand {
 
   @Override
   public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-    Player player = getPlayer(commandSender);
+    Player player = requirePlayer(commandSender);
     if(player == null)
       return false;
-    Map<String, BasicLocation> homes = getPlugin().getPlayerHomes(player.getName());
+    Map<String, Location> homes = getPlugin().getPlayer(player).getHomes();
     if(homes == null || homes.size() == 0) {
       player.sendMessage(ChatColor.DARK_GRAY + "Your don't have any saved homes");
     } else {
       player.sendMessage(ChatColor.DARK_GRAY + "Your currently set homes:");
       for(String home:homes.keySet()) {
         String message = ChatColor.DARK_GRAY + " - " + ChatColor.BLUE + home + ChatColor.DARK_GRAY;
-        BasicLocation location = homes.get(home);
-        message += String.format(" X:%.1f, Y:%.1f, Z:%.1f, World:%s", location.getX(), location.getY(), location.getZ(), location.getWorld());
+        Location location = homes.get(home);
+        message += String.format(" X:%.1f, Y:%.1f, Z:%.1f, World:%s", location.getX(), location.getY(), location.getZ(), location.getWorld().getName());
         player.sendMessage(message);
       }
     }

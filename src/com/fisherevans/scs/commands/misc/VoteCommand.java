@@ -1,7 +1,9 @@
-package com.fisherevans.scs.commands;
+package com.fisherevans.scs.commands.misc;
 
 import com.fisherevans.scs.SudoCraftSuite;
-import com.fisherevans.scs.Vote;
+import com.fisherevans.scs.commands.SudoCommand;
+import com.fisherevans.scs.votes.Vote;
+import com.fisherevans.scs.votes.VoteType;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -19,19 +21,19 @@ public class VoteCommand extends SudoCommand {
 
   @Override
   public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-    Player player = getPlayer(commandSender);
+    Player player = requirePlayer(commandSender);
     if(player == null)
       return false;
     if(args.length == 0) {
       player.sendMessage(BAD_ARG_MSG);
       return true;
     }
-    Vote.Type type;
-    if(args[0].equalsIgnoreCase("sun")) type = Vote.Type.WeatherSun;
-    else if(args[0].equalsIgnoreCase("rain")) type = Vote.Type.WeatherRain;
-    else if(args[0].equalsIgnoreCase("storm")) type = Vote.Type.WeatherStorm;
-    else if(args[0].equalsIgnoreCase("day")) type = Vote.Type.TimeDay;
-    else if(args[0].equalsIgnoreCase("night")) type = Vote.Type.TimeNight;
+    VoteType type;
+    if(args[0].equalsIgnoreCase("sun")) type = VoteType.WeatherSun;
+    else if(args[0].equalsIgnoreCase("rain")) type = VoteType.WeatherRain;
+    else if(args[0].equalsIgnoreCase("storm")) type = VoteType.WeatherStorm;
+    else if(args[0].equalsIgnoreCase("day")) type = VoteType.TimeDay;
+    else if(args[0].equalsIgnoreCase("night")) type = VoteType.TimeNight;
     else {
       player.sendMessage(BAD_ARG_MSG);
       return true;

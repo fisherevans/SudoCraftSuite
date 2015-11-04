@@ -1,5 +1,6 @@
-package com.fisherevans.scs;
+package com.fisherevans.scs.listeners;
 
+import com.fisherevans.scs.SudoCraftSuite;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,7 +28,7 @@ public class ChatListener implements Listener {
   @EventHandler
   public void onPlayerChat(AsyncPlayerChatEvent event) {
     event.setCancelled(true);
-    String message = _plugin.getChatFormat();
+    String message = _plugin.getCache().getConfig().getChat().getFormat();
     try {
       message = message.replace("#prefix", PermissionsEx.getUser(event.getPlayer()).getGroups()[0].getPrefix());
     } catch(Exception e) {

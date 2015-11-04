@@ -1,6 +1,8 @@
-package com.fisherevans.scs.commands;
+package com.fisherevans.scs.commands.tp;
 
 import com.fisherevans.scs.SudoCraftSuite;
+import com.fisherevans.scs.commands.SudoCommand;
+import com.fisherevans.scs.util.CommandUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -17,21 +19,21 @@ public class TPRCommand extends SudoCommand {
 
   @Override
   public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-    Player player = getPlayer(commandSender);
+    Player player = requirePlayer(commandSender);
     if(player == null)
       return false;
-    if(args.length == 0) {
+    String playerName = CommandUtil.getFirstArgument(args, "");
+    if(playerName.length() == 0) {
       player.sendMessage(ChatColor.DARK_GRAY + "Please specify a user. Example: " + ChatColor.BLUE + "/tpr RonPaul");
       return true;
     }
-    String toUser = args[0];
-    if(toUser.equals(player.getName())) {
-      player.sendMessage(ChatColor.DARK_GRAY + "You can't teleport to yourself.");
+    if(playerName.equals(player.getName())) {
+      player.sendMessage(ChatColor.DARK_GRAY + "You can't successfulTeleport to yourself.");
       return true;
     }
-    Player to = Bukkit.getPlayer(toUser);
+    Player to = Bukkit.getPlayer(playerName);
     if(to == null) {
-      player.sendMessage(ChatColor.BLUE + toUser + ChatColor.DARK_GRAY + " is not a player that is logged on.");
+      player.sendMessage(ChatColor.BLUE + playerName + ChatColor.DARK_GRAY + " is not a player that is logged on.");
       return true;
     }
     getPlugin().addTPRequest(player, to);

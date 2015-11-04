@@ -1,5 +1,6 @@
-package com.fisherevans.scs;
+package com.fisherevans.scs.listeners;
 
+import com.fisherevans.scs.SudoCraftSuite;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -33,7 +34,7 @@ public class DiamondBlockListener implements Listener {
         messages.get(name).task.cancel();
       }
       DiamondMessage message = new DiamondMessage(count, name);
-      message.task = message.runTaskLater(_plugin, _plugin.getDiamondDelay()*20);
+      message.task = message.runTaskLater(_plugin, _plugin.getCache().getConfig().getMineNotifications().getDiamondDelay()*20);
       modify(name, message);
     }
   }
