@@ -126,9 +126,9 @@ public class SudoCraftSuite extends JavaPlugin {
     if (!_tpRequests.containsKey(from.getName()))
       _tpRequests.put(from.getName(), new HashMap<String, Long>());
     _tpRequests.get(from.getName()).put(to.getName(), System.currentTimeMillis());
-    to.sendMessage(ChatColor.BLUE + from.getName() + ChatColor.DARK_GRAY + " has requested to successfulTeleport to your location.");
+    to.sendMessage(ChatColor.BLUE + from.getName() + ChatColor.DARK_GRAY + " has requested to teleport to your location.");
     to.sendMessage(ChatColor.DARK_GRAY + "Use " + ChatColor.BLUE + "/tpa " + from.getName() + ChatColor.DARK_GRAY + " to accept.");
-    from.sendMessage(ChatColor.DARK_GRAY + "Your successfulTeleport request has been sent to " + ChatColor.BLUE + to.getName());
+    from.sendMessage(ChatColor.DARK_GRAY + "Your teleport request has been sent to " + ChatColor.BLUE + to.getName());
   }
 
   public boolean acceptTPRequest(Player from, Player to) {
@@ -137,7 +137,7 @@ public class SudoCraftSuite extends JavaPlugin {
     Long requestTime = _tpRequests.get(from.getName()).remove(to.getName());
     if(requestTime == null || System.currentTimeMillis() - requestTime > _cache.getConfig().getTP().getTimeout()*1000)
       return false;
-    from.sendMessage(ChatColor.BLUE + to.getName() + ChatColor.DARK_GRAY + " has accepted your successfulTeleport request.");
+    from.sendMessage(ChatColor.BLUE + to.getName() + ChatColor.DARK_GRAY + " has accepted your teleport request.");
     to.sendMessage(ChatColor.BLUE + from.getName() + ChatColor.DARK_GRAY + " has been teleported to your location.");
     BukkitUtil.successfulTeleport(this, from, to.getLocation());
     return true;

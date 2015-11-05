@@ -31,7 +31,7 @@ public class TPACommand extends SudoCommand {
       return true;
     }
     if(!getPlugin().acceptTPRequest(from, player)) {
-      player.sendMessage(ChatColor.DARK_GRAY + "There is no active successfulTeleport request from " + ChatColor.BLUE + from.getName());
+      player.sendMessage(ChatColor.DARK_GRAY + "There is no active teleport request from " + ChatColor.BLUE + from.getName());
     }
     return true;
   }

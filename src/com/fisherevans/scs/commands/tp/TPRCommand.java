@@ -28,7 +28,7 @@ public class TPRCommand extends SudoCommand {
       return true;
     }
     if(playerName.equals(player.getName())) {
-      player.sendMessage(ChatColor.DARK_GRAY + "You can't successfulTeleport to yourself.");
+      player.sendMessage(ChatColor.DARK_GRAY + "You can't teleport to yourself.");
       return true;
     }
     Player to = Bukkit.getPlayer(playerName);
