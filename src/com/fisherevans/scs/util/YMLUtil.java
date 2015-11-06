@@ -3,6 +3,7 @@ package com.fisherevans.scs.util;
 import com.fisherevans.scs.SudoCraftSuite;
 import com.fisherevans.scs.cache.Cache;
 import com.fisherevans.scs.cache.CacheObject;
+import com.fisherevans.scs.cache.LockedChestCache;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
@@ -104,6 +105,23 @@ public class YMLUtil {
     ConfigurationSection section = rootSection.createSection(key);
     for(String subKey:objectMap.keySet()) {
       objectMap.get(subKey).save(section.createSection(subKey));
+    }
+  }
+
+  public static void getLockedChests(ConfigurationSection section, String key, Map<Location, LockedChestCache> map) {
+    ConfigurationSection chestMapSection = section.getConfigurationSection(key);
+    map.clear();
+    for(String chestKey:chestMapSection.getKeys(false)) {
+      LockedChestCache chestCache = new LockedChestCache();
+      chestCache.load(chestMapSection.getConfigurationSection(chestKey));
+      map.put(LockedChestCache.getLocationFromKey(chestKey), chestCache);
+    }
+  }
+
+  public static void setLockedChests(ConfigurationSection section, String key, Map<Location, LockedChestCache> map) {
+    ConfigurationSection chestMapSection = section.createSection(key);
+    for(Location location:map.keySet()) {
+      map.get(location).save(chestMapSection.createSection(LockedChestCache.getKey(location)));
     }
   }
 }

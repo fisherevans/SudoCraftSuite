@@ -83,3 +83,8 @@ commands:
     usage: /seen [player name]
     permission: SudoCraftSuite.builder
     permission-message: You don't have <permission>
+  chest:
+    description: Allows you lock a chest, and add and remove members.
+    usage: /chest [lock|[add|remove] [player name]]
+    permission: SudoCraftSuite.builder
+    permission-message: You don't have <permission>

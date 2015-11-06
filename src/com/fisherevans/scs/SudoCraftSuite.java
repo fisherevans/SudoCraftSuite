@@ -1,7 +1,9 @@
 package com.fisherevans.scs;
 
 import com.fisherevans.scs.cache.Cache;
+import com.fisherevans.scs.cache.LockedChestCache;
 import com.fisherevans.scs.cache.PlayerCache;
+import com.fisherevans.scs.commands.chest.ChestCommand;
 import com.fisherevans.scs.commands.home.DelHomeCommand;
 import com.fisherevans.scs.commands.home.HomeCommand;
 import com.fisherevans.scs.commands.home.HomesCommand;
@@ -20,12 +22,14 @@ import com.fisherevans.scs.commands.warp.WarpCommand;
 import com.fisherevans.scs.commands.warp.WarpsCommand;
 import com.fisherevans.scs.listeners.ChatListener;
 import com.fisherevans.scs.listeners.DiamondBlockListener;
+import com.fisherevans.scs.listeners.LockedChestListener;
 import com.fisherevans.scs.listeners.PlayerListener;
 import com.fisherevans.scs.util.BukkitUtil;
 import com.fisherevans.scs.votes.Vote;
 import com.fisherevans.scs.votes.VoteType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -44,6 +48,7 @@ public class SudoCraftSuite extends JavaPlugin {
   private PlayerListener _playerListener = new PlayerListener(this);
   private ChatListener _chatListener = new ChatListener(this);
   private DiamondBlockListener _diamondListener = new DiamondBlockListener(this);
+  private LockedChestListener _lockedChestListener = new LockedChestListener(this);
 
   private Cache _cache;
 
@@ -66,6 +71,7 @@ public class SudoCraftSuite extends JavaPlugin {
     Bukkit.getPluginManager().registerEvents(_playerListener, this);
     Bukkit.getPluginManager().registerEvents(_chatListener, this);
     Bukkit.getPluginManager().registerEvents(_diamondListener, this);
+    Bukkit.getPluginManager().registerEvents(_lockedChestListener, this);
 
     getLogger().info(_cache.getPlayers().size() + " Players loaded.");
     getLogger().info(_cache.getWarps().size() + " Warps loaded.");
@@ -88,6 +94,7 @@ public class SudoCraftSuite extends JavaPlugin {
     getCommand("warps").setExecutor(new WarpsCommand(this));
     getCommand("warp").setExecutor(new WarpCommand(this));
     getCommand("seen").setExecutor(new SeenCommand(this));
+    getCommand("chest").setExecutor(new ChestCommand(this));
   }
 
   @Override
@@ -120,6 +127,52 @@ public class SudoCraftSuite extends JavaPlugin {
       }
     }
     return _cache.getPlayers().get(uuid);
+  }
+
+  public PlayerCache findPlayerCacheByUsername(String username) {
+    for(Player onlinePlayer: Bukkit.getServer().getOnlinePlayers()) {
+      if(onlinePlayer.getName().equalsIgnoreCase(username)) {
+        return getPlayerCache(onlinePlayer);
+      }
+    }
+    for(String cacheUUID:_cache.getPlayers().keySet()) {
+      PlayerCache playerCache = _cache.getPlayers().get(username);
+      if(username.equalsIgnoreCase(playerCache.getLastUsername())) {
+        return playerCache;
+      }
+    }
+    return null;
+  }
+
+  public LockedChestCache getLockedChestCache(Location location) {
+    return getLockedChestCache(location, false);
+  }
+
+  public LockedChestCache removeLockedChestCache(Location location) {
+    return getLockedChestCache(location, true);
+  }
+
+  public LockedChestCache getLockedChestCache(Location location, boolean remove) {
+    LockedChestCache chest = null;
+    Location dx, dz;
+    for(int delta = -1;delta <= 1;delta++) {
+      dx = new Location(location.getWorld(), location.getBlockX() + delta, location.getBlockY(), location.getBlockZ());
+      chest = remove ? _cache.getLockedChests().remove(dx) :_cache.getLockedChests().get(dx);
+      if(chest == null && delta != 0) {
+        dz = new Location(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ() + delta);
+        chest = remove ? _cache.getLockedChests().remove(dz) :_cache.getLockedChests().get(dz);
+      }
+      if(chest != null)
+        break;
+    }
+    return chest;
+  }
+
+  public boolean setLockedChestCache(LockedChestCache chest) {
+    if(getLockedChestCache(chest.getLocation()) != null)
+      return false;
+    _cache.getLockedChests().put(chest.getLocation(), chest);
+    return true;
   }
 
   public void addTPRequest(Player from, Player to) {

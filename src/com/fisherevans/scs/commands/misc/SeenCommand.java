@@ -29,26 +29,7 @@ public class SeenCommand extends SudoCommand {
     if(playerName.length() == 0) {
       commandSender.sendMessage(ChatColor.DARK_GRAY + "Please enter a valid player name");
     }
-    for(Player player:Bukkit.getServer().getOnlinePlayers()) {
-      if(player.getName().equalsIgnoreCase(playerName)) {
-        commandSender.sendMessage(ChatColor.BLUE + playerName + ChatColor.DARK_GRAY + " is online RIGHT NOW!");
-        commandSender.sendMessage(ChatColor.DARK_GRAY + "They are located at " +
-            String.format("X:%.1f, Y:%.1f, Z:%.1f in " + ChatColor.BLUE + "%s",
-                player.getLocation().getX(),
-                player.getLocation().getY(),
-                player.getLocation().getZ(),
-                player.getLocation().getWorld().getName()));
-        return true;
-      }
-    }
-    PlayerCache playerCache = null, thisPlayerCache;
-    for(String uuid:getPlugin().getCache().getPlayers().keySet()) {
-      thisPlayerCache = getPlugin().getCache().getPlayers().get(uuid);
-      if(playerName.equalsIgnoreCase(thisPlayerCache.getLastUsername())) {
-        playerCache = thisPlayerCache;
-        break;
-      }
-    }
+    PlayerCache playerCache = getPlugin().findPlayerCacheByUsername(playerName);
     if(playerCache == null || playerCache.getLastLogin() == null) {
       commandSender.sendMessage(ChatColor.DARK_GRAY + "Sorry, there's no information on the player " + ChatColor.BLUE + playerName);
     } else {
