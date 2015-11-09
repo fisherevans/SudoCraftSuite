@@ -31,6 +31,8 @@ public class LockedChestListener implements Listener {
 
   @EventHandler
   public void onInventoryOpenEvent(InventoryOpenEvent e){
+    if(e == null || e.getInventory() == null || e.getInventory().getHolder() == null)
+      return;
     Location location = null;
     if(e.getInventory().getHolder().getClass() == Chest.class)
       location = ((Chest) e.getInventory().getHolder()).getLocation();
